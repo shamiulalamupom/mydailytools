@@ -1,5 +1,7 @@
 import requests
+from functools import lru_cache
 
+@lru_cache
 def display_weather():
     cities = ["Paris", "London", "Tokyo", "Montpellier", "Lyon"]
 
