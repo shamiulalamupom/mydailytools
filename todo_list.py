@@ -1,11 +1,17 @@
-my_todo_list = []
+import pickle
 
 def addtask():
+    with open('todo_list.pkl', 'rb') as file:
+        todo_list = pickle.load(file)
     todo = {"title": input("Title: "), "desc": input("Description: ")}
-    my_todo_list.append(todo)
+    todo_list.append(todo)
+    with open('todo_list.pkl', 'wb') as file:
+        pickle.dump(todo_list, file)
     print("New task has been added!")
 
-def displaytask(todo_list):
+def displaytask():
+    with open('todo_list.pkl', 'rb') as file:
+        todo_list = pickle.load(file)
     if not todo_list:
         print("There is no task to display.")
     else:
@@ -13,7 +19,9 @@ def displaytask(todo_list):
         for todo in todo_list:
             print(f"{todo['title']}: {todo['desc']}")
 
-def deletetask(todo_list: list):
+def deletetask():
+    with open('todo_list.pkl', 'rb') as file:
+        todo_list = pickle.load(file)
     if not todo_list:
         print("There is no todo to delete.")
     else:
@@ -23,13 +31,17 @@ def deletetask(todo_list: list):
             print(f"{index}. {todo['title']}: {todo['desc']}")
             index+=1
         try:
-            inp = int(input(f"Enter which task you want to delete (1 to {index-1})"))
+            inp = int(input(f"Enter which task you want to delete (1 to {index-1}): "))
             if inp < index:
                 todo_list.pop(inp-1)
+            with open('todo_list.pkl', 'wb') as file:
+                pickle.dump(todo_list, file)
         except ValueError:
             print("There was an error. Please try again in some time.")
 
-def modifytask(todo_list):
+def modifytask():
+    with open('todo_list.pkl', 'rb') as file:
+        todo_list = pickle.load(file)
     if not todo_list:
         print("There is no todo to modify.")
     else:
@@ -39,7 +51,7 @@ def modifytask(todo_list):
             print(f"{index}. {todo['title']}: {todo['desc']}")
             index+=1
         try:
-            inp = int(input(f"Enter which task you want to modify (1 to {index-1})"))
+            inp = int(input(f"Enter which task you want to modify (1 to {index-1}): "))
             if inp < index:
                 print("Leave empty if you don't want to change.")
                 inp_title = input("Enter the new title: ")
@@ -50,5 +62,38 @@ def modifytask(todo_list):
                     
                 if inp_desc:
                     todo_list[inp-1]["desc"] = inp_desc
+                
+            with open('todo_list.pkl', 'wb') as file:
+                pickle.dump(todo_list, file)
         except ValueError:
             print("There was an error. Please try again in some time.")
+
+def todo_list():
+    while 1:
+        print("""Choose between the tasks you want to do:
+    1. Add a task.
+    2. Display all the tasks.
+    3. Delete a task.
+    4. Modify a task.""")
+        inp = input("Enter your choice (1-4): ")
+        if inp == '':
+            break
+        
+        try:
+            inp = int(inp)
+        except ValueError:
+            print("Please try again in some time.")
+
+        if inp == 1:
+            addtask()
+        elif inp == 2:
+            displaytask()
+        elif inp == 3:
+            deletetask()
+        elif inp == 4:
+            modifytask()
+        else:
+            print("Try again in some time.")
+
+if __name__ == "__main__":
+    todo_list()
