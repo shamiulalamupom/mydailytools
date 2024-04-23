@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
-Path('/todo_list.pkl').touch()
+Path(f'{os.getcwd()}/todo_list.pkl').touch()
