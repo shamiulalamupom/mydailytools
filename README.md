@@ -7,5 +7,5 @@ BBA1 IT Project MyDailyTools.
 
 #### • Install virtual env module.
 ```bash
-> pip install -r requirements.txt
+pip install -r requirements.txt
 ```
