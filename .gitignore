@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 # Pickle extensions
-*.pickle
+*.pkl
 
 # Distribution / packaging
 .Python
