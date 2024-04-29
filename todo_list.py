@@ -1,8 +1,21 @@
 import pickle
+import os
+from pathlib import Path
+
+def load_tasks(filename: str):
+    while 1:
+        try:
+            with open(filename, 'rb') as file:
+                todo_list = pickle.load(file)
+                return todo_list
+        except Exception as e:
+            Path(f'{os.getcwd()}/todo_list.pkl').touch()
+            with open('todo_list.pkl', 'wb') as file:
+                pickle.dump([], file)
 
 def addtask():
-    with open('todo_list.pkl', 'rb') as file:
-        todo_list = pickle.load(file)
+    todo_list = load_tasks('todo_list.pkl')
+            
     todo = {"title": input("Title: "), "desc": input("Description: ")}
     todo_list.append(todo)
     with open('todo_list.pkl', 'wb') as file:
@@ -10,8 +23,7 @@ def addtask():
     print("New task has been added!")
 
 def displaytask():
-    with open('todo_list.pkl', 'rb') as file:
-        todo_list = pickle.load(file)
+    todo_list = load_tasks('todo_list.pkl')
     if not todo_list:
         print("There is no task to display.")
     else:
@@ -20,8 +32,8 @@ def displaytask():
             print(f"{todo['title']}: {todo['desc']}")
 
 def deletetask():
-    with open('todo_list.pkl', 'rb') as file:
-        todo_list = pickle.load(file)
+    todo_list = load_tasks('todo_list.pkl')
+    
     if not todo_list:
         print("There is no todo to delete.")
     else:
@@ -40,8 +52,7 @@ def deletetask():
             print("There was an error. Please try again in some time.")
 
 def modifytask():
-    with open('todo_list.pkl', 'rb') as file:
-        todo_list = pickle.load(file)
+    todo_list = load_tasks('todo_list.pkl')
     if not todo_list:
         print("There is no todo to modify.")
     else:
@@ -75,7 +86,7 @@ def todo_list():
     2. Display all the tasks.
     3. Delete a task.
     4. Modify a task.""")
-        inp = input("Enter your choice (1-4): ")
+        inp = input("Enter your choice (1-4 and Enter to close): ")
         if inp == '':
             break
         
