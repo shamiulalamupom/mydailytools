@@ -10,7 +10,7 @@ def load_tasks(filename: str):
                 return todo_list
         except Exception as e:
             Path(f'{os.getcwd()}/todo_list.pkl').touch()
-            with open('todo_list.pkl', 'wb') as file:
+            with open(filename, 'wb') as file:
                 pickle.dump([], file)
 
 def addtask():

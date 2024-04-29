@@ -1,5 +1,8 @@
+import os
 import requests
 from functools import lru_cache
+from dotenv import load_dotenv
+load_dotenv()
 
 @lru_cache(maxsize=None)
 def display_weather():
@@ -11,7 +14,7 @@ def display_weather():
 
     inp = input("Now enter the name of the city: ")
 
-    url = f"http://api.weatherapi.com/v1/forecast.json?key=7415433cc163485cb8d93117242204&q={inp}&days=7&aqi=yes&alerts=no"
+    url = f"http://api.weatherapi.com/v1/forecast.json?key={os.getenv('Weather_ENV')}&q={inp}&days=7&aqi=yes&alerts=no"
     response = requests.get(url)
     json = response.json()
 
