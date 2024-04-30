@@ -15,7 +15,7 @@ def generate_password(length=8, use_upper=True, use_numbers=True, use_special=Tr
 
     return ''.join(random.choice(chars) for _ in range(length))
 
-def main():
+def password_generator():
     while True:
         mode = input("Please select the mode (default/manual): ").lower()
         if mode == "default":
@@ -37,4 +37,4 @@ def main():
             print("Invalid option, please try again.")
 
 if __name__ == "__main__":
-    main()
+    password_generator()
